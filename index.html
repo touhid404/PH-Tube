@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FakeTube by @touhid</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <nav
+        class="w-11/12 mx-auto flex justify-between my-8 border-b-2 border-gray-300 py-5"
+      >
+        <div class="">
+          <img class="max-w-40" src="./assets/logo.svg" alt="logo" />
+        </div>
+        <div class="">
+          <button class="btn bg-slate-400 text-white rounded-lg border-none">
+            Sort by view
+          </button>
+        </div>
+        <div class="">
+          <button class="btn text-white bg-[#FF1F3D] rounded-lg border-none">
+            Blogs
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- dynamic add category buttons -->
+    <nav class="md:w-1/4 lg:w-1/4  mx-2 md:mx-auto lg:mx-auto py-3">
+      <div id="category-container" class="flex justify-between gap-2">
+        <button class="btn bg-[#FF1F3D] rounded-md" onclick="loadVideos()">All</button>
+      </div>
+    </nav>
+
+    <!-- video container -->
+    <div
+      id="video-container"
+      class="mt-10 w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 justify-center"
+    >
+      <!-- video cards -->
+
+      
+    </div>
+
+    <!-- Connect js file -->
+    <script src="./scripts/index.js"></script>
+  </body>
+</html>
