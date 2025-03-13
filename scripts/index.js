@@ -32,6 +32,7 @@ function DisplayCategory(categories) {
 
 // Load video by category
 function loadVideoByCategory(categoryId){
+  Showloader();
   
   const url = `https://openapi.programming-hero.com/api/phero-tube/category/${categoryId}`;
   fetch(url).then((response) => response.json())
@@ -41,8 +42,9 @@ function loadVideoByCategory(categoryId){
 
 // Load video
 
-function loadVideos(){
-    fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
+function loadVideos(search=''){
+  Showloader();
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${search}`)
        .then((response) => response.json())
        .then((data) => DisplayVideo(data.videos));
 }
@@ -88,6 +90,7 @@ function DisplayVideo(videos){
         <h2 class="text-2xl font-bold pt-3">OOPS sorry! there is no content here</h2>
       </div>
       `;
+      Hideloader();
       return;
     }
     videos.forEach(video => {
@@ -111,15 +114,19 @@ function DisplayVideo(videos){
           <div class="">
             <h2 class="font-semibold">Building a Winning UX Strategy Using the Kano Model</h2>
             <div class="flex gap-2">
-                <p class="text-[#17171770] text-md">${video.authors[0].profile_name}</p>
-                <img src="./assets/verfication.svg" alt="">
+                <p class="text-[#17171770] text-md flex gap-2">${video.authors[0].profile_name}
+                ${video.authors[0].verified == true ? `<img src="./assets/verfication.svg" alt="">` : ``}</p> 
+
+                </p>
+                
+                
             </div>
             
             <p class="text-[#17171770] text-md">${video.others.views}</p>
 
           </div>
         </div>
-        <button class="btn btn-outline btn-info" onclick="loadVideoDetails('${video.video_id}')"     >video details</button>
+        <button class="btn btn-outline btn-info" onclick="loadVideoDetails('${video.video_id}')"     >Video Details</button>
       </div>
         
         `;
@@ -129,9 +136,31 @@ function DisplayVideo(videos){
         
         
     });
+    Hideloader();
 
 
    
 }
+
+
+function Showloader (){
+  document.getElementById('loader').classList.remove('hidden');
+  document.getElementById('video-container').classList.add('hidden');
+
+}
+function Hideloader (){
+  document.getElementById('loader').classList.add('hidden');
+  document.getElementById('video-container').classList.remove('hidden');
+
+}
+
+
+document.getElementById('searchInput').addEventListener('keyup', function (event) {
+  loadVideos(event.target.value);
+
+});
+
+
+
 loadCategory();
 // loadVideos();

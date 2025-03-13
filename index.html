@@ -17,13 +17,14 @@
       <nav
         class="w-11/12 mx-auto flex justify-between my-8 border-b-2 border-gray-300 py-5"
       >
-        <div class="">
+        <div class="hidden md:block lg:block">
           <img class="max-w-40" src="./assets/logo.svg" alt="logo" />
         </div>
         <div class="">
-          <button class="btn bg-slate-400 text-white rounded-lg border-none">
-            Sort by view
-          </button>
+          <label class="input">
+            <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></g></svg>
+            <input id="searchInput" type="search" required placeholder="Search"/>
+          </label>
         </div>
         <div class="">
           <button class="btn text-white bg-[#FF1F3D] rounded-lg border-none">
@@ -41,6 +42,11 @@
         </button>
       </div>
     </nav>
+
+
+    <section id="loader" class="text-center py-7 hidden">
+      <span class="loading loading-dots loading-xl"></span>
+    </section>
 
     <!-- video container -->
     <div
