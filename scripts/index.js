@@ -6,39 +6,91 @@ function loadCategory(){
        
 }
 
-function DisplayCategory(categories){
-    
-   
-    const categoriesConatiner = document.getElementById('category-container');
-    for(const cat of categories){
-        const categoryBtn = document.createElement('button');
-        categoryBtn.classList.add('btn','hover:bg-[#FF1F3D]','rounded-md');
-        categoryBtn.innerText = cat.category;
-       
-       
-        categoriesConatiner.appendChild(categoryBtn);
-       
-    }
-   
+function DisplayCategory(categories) {
+  const categoriesContainer = document.getElementById('category-container');
+
+  for (const cat of categories) {
+      const categoryBtn = document.createElement('button');
+      categoryBtn.classList.add('btn', 'hover:bg-[#FF1F3D]', 'rounded-md');
+      categoryBtn.innerText = cat.category;
+
+      categoryBtn.addEventListener('click', function () {
+          
+          const allButtons = categoriesContainer.querySelectorAll('button');
+          allButtons.forEach(btn => btn.classList.remove('bg-[#FF1F3D]'));
+
+          categoryBtn.classList.add('bg-[#FF1F3D]');
+
+          // Load video by category
+          loadVideoByCategory(cat.category_id);
+      });
+
+      categoriesContainer.appendChild(categoryBtn);
+  }
 }
 
 
+// Load video by category
+function loadVideoByCategory(categoryId){
+  
+  const url = `https://openapi.programming-hero.com/api/phero-tube/category/${categoryId}`;
+  fetch(url).then((response) => response.json())
+  .then((data) => DisplayVideo(data.category));
 
-
+}
 
 // Load video
 
-function loadVideos(categoryId){
+function loadVideos(){
     fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
        .then((response) => response.json())
        .then((data) => DisplayVideo(data.videos));
 }
 
+// video Details
+function loadVideoDetails(id){
+  
+
+  const url = `https://openapi.programming-hero.com/api/phero-tube/video/${id}`;
+  fetch(url).then((response) => response.json())
+ .then((data) => DisplayVideoDetails(data.video));
+
+}
+
+// DisplayVideo details
+function DisplayVideoDetails(video){
+  
+  document.getElementById("videoDetails").showModal();
+  const detailsContainer = document.getElementById("detailsContainer");
+  detailsContainer.innerHTML =`
+  <div class="card bg-base-100 image-full  shadow-sm">
+  <figure>
+    <img
+      src="${video.thumbnail}"
+      alt="Shoes" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">${video.title}</h2>
+    <p class="text-justify">${video.description}</p>
+    
+  </div>
+</div>
+  `;
+
+}
 function DisplayVideo(videos){
     const videoContainer = document.getElementById('video-container');
-    console.log(videos);
+    videoContainer.innerHTML ="";
+    if(videos.length==0){
+      videoContainer.innerHTML = `
+      <div class="col-span-full flex justify-center items-center flex-col">
+        <img src="./assets/icon.svg" alt="">
+        <h2 class="text-2xl font-bold pt-3">OOPS sorry! there is no content here</h2>
+      </div>
+      `;
+      return;
+    }
     videos.forEach(video => {
-        console.log(video);
         const videoCard = document.createElement('div');
         videoCard.innerHTML = `
    <div class="card bg-base-100">
@@ -67,6 +119,7 @@ function DisplayVideo(videos){
 
           </div>
         </div>
+        <button class="btn btn-outline btn-info" onclick="loadVideoDetails('${video.video_id}')"     >video details</button>
       </div>
         
         `;
